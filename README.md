@@ -1,4 +1,4 @@
 # WildMap
 Map application for HackNH
 
-WE ball!
+WE ballin!
