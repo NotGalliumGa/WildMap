@@ -50,15 +50,7 @@
         <div>
             <!--This is were mub event fetch is held, this can change depending on how you want it sam-->
             <script>
-                let url = "http://localhost:3000/fetch-data";  // Local endpoint
-
-                fetch(url)
-                .then(response => response.text())  // Adjust to .json() if the data is JSON
-                .then(data => {
-                    console.log(data);
-                    document.getElementById("demo").innerText = data;
-                })
-                .catch(error => console.error('Error:', error));
+                
             </script>
         </div>
     </div>
