@@ -18,7 +18,7 @@
     position: fixed;
     top: 15px;
     left: 15px;
-    color: #444;
+    color: #ffffff;
     z-index: 2;
 }
 
@@ -73,11 +73,11 @@
 }
 
 .reviews-page #main {
-    background-color: #cf5b5b; /* Light grey for Reviews Page */
+    background-color: #fda1a1; /* Light grey for Reviews Page */
 }
 
 .map-page #main {
-    background-color: #f0f8f1; /* Soft green for Map Page */
+    background-color: #42ff58; /* Soft green for Map Page */
 }
 
 /* Home Page Content Styling */
@@ -246,7 +246,7 @@
 
 /* Floating Buttons on Right Side */
 .add-request-btn, .add-review-btn {
-    position: fixed;
+    position: static;
     right: 20px;
     padding: 15px 20px;
     border-radius: 50px;
@@ -261,12 +261,12 @@
 
 /* Specific styling for each button */
 .add-request-btn {
-    bottom: 100px;
+    bottom: 40px;
     background-color: #28a745;
 }
 
 .add-review-btn {
-    bottom: 40px;
+    bottom: 100px;
     background-color: #007bff;
 }
 
