@@ -29,7 +29,7 @@ async function scrapeWebsite() {
     // Extract the page content (assuming it's a text file)
     const data = await page.evaluate(() => document.body.innerText);
 
-    console.log('Scraped Data:', data);
+    //console.log('Scraped Data:', data);
 
     // Close the browser
     await browser.close();
@@ -46,7 +46,8 @@ async function scrapeWebsite() {
 // Run the scraper
 scrapeWebsite()
   .then(data => {
-    // Do something with the scraped data if needed
-    console.log("Data fetched successfully:", data);
+    // gets only events
+    const matches = data.match(/UNH Student Activities 24-25(?:.*\s){4}/g);
+    console.log(matches)
   })
   .catch(error => console.error('Scraping failed:', error));
