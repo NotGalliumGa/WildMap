@@ -16,15 +16,17 @@
         #map { height: 100%; border-radius: 8px;}
         #search-container {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 130px; /* Adjust the vertical position as needed */
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
         }
         #search-bar {
-            padding: 8px;
-            width: 200px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 8px; /* Extra padding for a more pill-like shape */
+            width: 600px;
+            border: 3px solid #ccc;
+            border-radius: 999px; /* High border-radius value to make it fully rounded */
+            outline: none; 
         }
         /* Sidebar styles */
         #menu-toggle {
@@ -68,6 +70,13 @@
         }
         #menu-toggle:checked + #menu-icon + #sidebar + #main {
             margin-left: 250px;
+        }
+        /* Button Container for Alignment */
+        #button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px; /* Adds spacing between buttons and form */
         }
     </style>
 </head>
@@ -128,50 +137,7 @@
                                 latLng: [43.13544923700985, -70.93326597669162],
                                 desc: "The Dimond Library is the main library on campus and houses collections supporting the humanities, social sciences, business, health sciences, human services, education, and earth sciences. It is also home to the federal and state depository publication collections, multimedia, Special Collections, University Archives, and the University Museum. Students enjoy using the library's quiet rooms and comfortable seating to study.<br>Tags: reading, books, study spot, diamond",
                                 link: "https://library.unh.edu/locations/dimond-library"
-                            },
-                            {
-                                name: "Hamel Recreation Center (HRC)",
-                                latLng: [43.13877, -70.93335],
-                                desc: "The Hamel Recreation Center is a state-of-the-art fitness and recreation facility at the University of New Hampshire. It offers a wide range of fitness equipment, group exercise classes, indoor courts, and recreational spaces. It is a popular hub for students looking to stay active and engaged with various sports and fitness programs.<br>Tags: gym, basketball, volleyball, squash, climbing, swimming, pool",
-                                link: "https://campusrec.unh.edu/facilities/hamel-recreation-center"
-                            },
-                            {
-                                name: "Kingsbury Hall",
-                                latLng: [43.13417908742887, -70.93435063027898],
-                                desc: "Kingsbury Hall provides students the environment they need to learn to become the next generation of scientists, engineers, and mathematicians. The laboratories have the appropriate infrastructure, with high-bay areas and heating, air conditioning, and ventilation throughout. All departments in Kingsbury have computer clusters and student project spaces.<br>Tags: CEPS, Computer science, IT, engineering",
-                                link: "https://ceps.unh.edu/facility/kingsbury-hall"
-                            },
-                            {
-                                name: "Ecenter",
-                                latLng: [43.13628730878516, -70.92640880283004],
-                                desc: "The Peter T. Paul Entrepreneurship Center delivers a unique, hands-on, experiential programming that inspires, nurtures, and mentors students from any major, at every step in the process, anywhere from idea development to company creation.<br>Tags: entrepeneurship",
-                                link: "https://www.unh.edu/ecenter/"
-                            },
-                            {
-                                name: "University of New Hampshire InterOperability Laboratory (IOL)",
-                                latLng: [43.136152709507066, -70.92662000573046],
-                                desc: "The UNH InterOperability Laboratory tests networking and data communications products. Since 1988, the laboratory has fostered multi-vendor interoperability while preparing students for careers in the industry.<br>Tags: network, testing",
-                                link: "https://innovation.unh.edu/unh-interoperability-lab"
-                            },
-                            {
-                                name: "Whittemore Center Arena",
-                                latLng: [43.139646398728345, -70.9345250208699],
-                                desc: "The Whittemore Center is a multi-purpose arena. It is home to the UNH Wildcats Hockey. Other events that happen in the Whitt include career fairs, open skate, and concerts.<br>Tags: skate, hockey, venue, arena",
-                                link: "https://campusrec.unh.edu/facilities/whittemore-center-arena"
-                            },
-                            {
-                                name: "Paul College",
-                                latLng: [43.136656798875336, -70.92926288466798],
-                                desc: "The Peter T. Paul College of Business and Economics provides state-of-the-art facilities, including classrooms, lecture halls, computer labs, and collaboration spaces.",
-                                link: "https://paulcollege.unh.edu"
-                            },
-                            {
-                                name: "Holloway Commons (HoCo)",
-                                latLng: [43.13521725906018, -70.92950021960765],
-                                desc: "Holloway Commons is centrally located and the largest dining hall on campus. It features many individual food stations where fresh items are prepared right on the spot. Favorites include stir-fry and brick-oven specialties.<br>Tags: food, breakfast, lunch, dinner, meal",
-                                link: "https://www.unh.edu/dining/facility/holloway-commons-hoco"
-                            },
-                            
+                            }
                         ];
 
                         const markers = [];
@@ -218,32 +184,33 @@
                 <h1 style="color: black; text-align: center;">Recent Location Reviews</h1>
                 <p style="color: white; text-align: center;">See what other users think about different locations. Filter by star rating to find the best reviews.</p>
                 
-                <button class="add-review-btn" onclick="showForm()">+ Add Location Review</button>
-                <button class="add-request-btn" onclick="showForm()">+ Add New Location Request</button>
+                <div id="button-container">
+                    <button class="add-review-btn" onclick="showForm()">+ Add Location Review</button>
+                    <button class="add-request-btn" onclick="showForm()">+ Add New Location Request</button>
+                </div>
         
                 <!-- Expandable Form Section -->
                 <div id="expandableForm" class="card mt-4">
                     <div class="card-body">
                         <form method="POST" action="/">
                             <div class="form-titles">
-                                <label for="first_name">name</label>
+                                <label for="first_name">Name</label>
                                 <input type="text" name="name" id="first_name" class="form-control" />
                             </div>
                             <div class="form-titles">
-                                <label for="last_name">location description</label>
-                                <input type="text" name="location_desc" id="last_name" class="form-control" />
+                                <label for="location_desc">Location Description</label>
+                                <input type="text" name="location_desc" id="location_desc" class="form-control" />
                             </div>
                             <div class="form-titles">
-                                <label for="email_address">general descriptions</label>
-                                <input type="text" name="general_desc" id="email_address" class="form-control" />
+                                <label for="general_desc">General Descriptions</label>
+                                <input type="text" name="general_desc" id="general_desc" class="form-control" />
                             </div>
                             <div class="form-titles">
-                                <input type="submit" class="btn btn-success" value="Submit" />
+                                <input type="submit" class="btn-success" value="Submit" />
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
             
             <script>
                 // Function to toggle form visibility on button clicks
