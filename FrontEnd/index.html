@@ -86,8 +86,9 @@
     <label for="menu-toggle" id="menu-icon" style="position: fixed;">&#9776;</label>
     <div id="sidebar">
         <a href="#main" class="menu-item">Map</a>
+        <a href="#events" class="menu-item">Events</a>
+        <a href="#filter-container" class="menu-item">Review</a>
         <a href="#about" class="menu-item">About us</a>
-        <a href="#filter-container" class="menu-item">Request/Review Location</a>
     </div>
 
 
@@ -211,22 +212,76 @@
                         
                     </script>
                 </div>
-            </div>
+
+                <div id="events" style="margin-top: 10px;">
+                    <h1 style="color: black; text-align: center;">Student Org Events</h1>
+                    <p style="color: white; text-align: center;">Connect with other students through current student events!</p>
+                    <div id="scrollable-container">
+                        <div id="data-container"><!--Event Data is inserted here--></div>
+                    </div>
+                </div>
+        
+                <script>
+                    async function fetchData() {
+                        try {
+                        // Fetch the scraped data from the server
+                        const response = await fetch('http://localhost:2000/scrape');
+                        const data = await response.json();
             
-            <div id="about" class="intro-card">
-                <h2>About Us</h2>
-                <p>WildMap helps students discover and contribute to campus locations.
-                    WildMap was created in hopes to help students discover the best places on campus, share their experiences, and connect with others. 
-                    Whether you're here to review locations, find new spots, or find an event, we're glad to have you on board!
-                </p>
+                        const container = document.getElementById('data-container');
+                        if (data && data.length > 0) {
+                            // element creation 
+                            data.forEach((event, index) => {
+                                const [title, subtitle, datetime, location] = event.split('\n');
+                                const eventDiv = document.createElement('div');
+                                eventDiv.classList.add('event');
+
+                                // Event number/title
+                                const titleEl = document.createElement('h2');
+                                titleEl.textContent = title;
+                                eventDiv.appendChild(titleEl);
+
+                                // Subtitle
+                                const subtitleEl = document.createElement('p');
+                                subtitleEl.textContent = subtitle;
+                                subtitleEl.classList.add('subtitle');
+                                eventDiv.appendChild(subtitleEl);
+
+                                // Date and time
+                                const datetimeEl = document.createElement('p');
+                                datetimeEl.textContent = datetime;
+                                datetimeEl.classList.add('datetime');
+                                eventDiv.appendChild(datetimeEl);
+
+                                // Location
+                                const locationEl = document.createElement('p');
+                                locationEl.textContent = location;
+                                locationEl.classList.add('location');
+                                eventDiv.appendChild(locationEl);
+
+                                // Append the full event element to the container
+                                container.appendChild(eventDiv);
+                            });
+                        } else {
+                            container.textContent = 'No events found.'; // will never happen cuz of backup data >:)
+                        }
+                        } catch (error) {
+                            console.error('Error fetching data:', error);
+                            document.getElementById('data-container').textContent = 'Failed to load events.';
+                        }
+                    }
+
+                    fetchData() // call it asap
+                </script>
+
             </div>
             
             <div class="reviews-content" style="margin-top: 10%;">
                 <h1 style="color: black; text-align: center;">Recent Location Reviews</h1>
                 <p style="color: white; text-align: center;">See what other users think about different locations. Filter by star rating to find the best reviews.</p>
                 
-                <button class="add-review-btn" onclick="showForm()">+ Add Location Review</button>
-                <button class="add-request-btn" onclick="showForm()">+ Add New Location Request</button>
+                <button class="add-review-btn" onclick="showForm()">Add Location Review</button>
+                <button class="add-request-btn" onclick="showForm()">Add New Location Request</button>
         
                 <!-- Expandable Form Section -->
                 <div id="expandableForm" class="card mt-4">
@@ -270,7 +325,6 @@
                 addReviewBtn.addEventListener('click', toggleForm);
                 addRequestBtn.addEventListener('click', toggleForm);
             </script>
-
 
                 <!-- Filter Section -->
                 <div id="filter-container" style="margin-top: 20px; margin-bottom: 20px;">
@@ -323,10 +377,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="about" class="intro-card">
+                    <h2>About Us</h2>
+                    <p style="color: black;">WildMap helps students discover and contribute to campus locations.
+                        WildMap was created in hopes to help students discover the best places on campus, share their experiences, and connect with others. 
+                        Whether you're here to review locations, find new spots, or find an event, we're glad to have you on board!
+                    </p>
+                </div>
             </div>
         </div>
-
-        <!-- Events and info goes here -->
     </div>
 </body>
 </html>

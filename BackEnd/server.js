@@ -85,16 +85,64 @@ async function scrapeWebsite() {
   }
 }
 
+app.get('/scrape', async (req, res) => {
+try {
+    const data = await scrapeWebsite();
+    console.log(data)
+    let matches = data.match(/UNH Student Activities 24-25(?:.*\s){4}/g); // Adjust the regex or filter logic if necessary
+    if (matches == null) {
+        console.log("backup data was forced to be used")
+        matches = backupData.match(/UNH Student Activities 24-25(?:.*\s){4}/g);
+    }
 
-// Run the scraper
-scrapeWebsite()
-  .then(data => {
-    // gets only events
-    const matches = data.match(/UNH Student Activities 24-25(?:.*\s){4}/g);
-    console.log(matches)
-  })
-  .catch(error => console.error('Scraping failed:', error));
+    res.json(matches);  // Send the extracted data as JSON
+} catch (error) {
+    console.error('Error in /scrape endpoint:', error);
+    res.status(500).json({ error: 'Failed to scrape data' });
+}
+});
 
 app.listen(2000, () => {
     console.log("http://localhost:2000/")
 })
+
+const backupData = `UNH Student Activities 24-25
+UNH Makers Expo
+Fri, Dec 6, 2024 ⦁ 10:00am
+UNH - Granite State Room
+UNH Student Activities 24-25
+Mr. UNH hosted by Chi Omega
+Sun, Nov 10, 2024 ⦁ 4:00pm
+UNH - Granite State Room
+UNH Student Activities 24-25
+Crochet 101 Workshop
+Fri, Nov 15, 2024 ⦁ 6:00pm
+MUB 330/332
+UNH Student Activities 24-25
+Asian Night Market
+Fri, Nov 15, 2024 ⦁ 6:00pm
+UNH - Granite State Room
+UNH Student Activities 24-25
+Wildcat Dance Crew Fall Showcase
+Sat, Nov 23, 2024 ⦁ 2:00pm
+UNH - Johnson Theatre
+UNH Student Activities 24-25
+Cultural Exploration Night with NACA
+Thu, Nov 14, 2024 ⦁ 7:00pm
+UNH - Strafford Room
+UNH Student Activities 24-25
+BSU Roll Bounce
+Sat, Nov 16, 2024 ⦁ 6:00pm
+UNH - Granite State Room
+UNH Student Activities 24-25
+CHAARG Turkey Trot
+Sun, Nov 24, 2024 ⦁ 12:00pm
+Wildcat Statue
+UNH Student Activities 24-25
+UNH WildTones Winter Concert
+Fri, Dec 6, 2024 ⦁ 7:00pm
+MUB E-Center Underground Room
+UNH Student Activities 24-25
+Wildcards Fall Syndicon
+Sat, Nov 16, 2024 ⦁ 11:30am
+UNH - Strafford Room`;
