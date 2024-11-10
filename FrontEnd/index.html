@@ -15,12 +15,7 @@
 
     <style>
         #map { height: 100%; border-radius: 8px;}
-        #search-container {
-            position: absolute;
-            top: 460px;
-            right: 270px;
-            z-index: 1000;
-        }
+        
         #search-bar {
             padding: 8px;
             width: 720px;
@@ -76,10 +71,7 @@
 
 <body class="index-page">
 
-    <!-- Search Bar -->
-    <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for places">
-    </div>
+    
 
     <!-- Sidebar and Hamburger Menu -->
     <input type="checkbox" id="menu-toggle">
@@ -100,6 +92,12 @@
             <div class="boxed-text">
                 <p style="color: black;">Your go-to platform for exploring and contributing to the community.</p>
             </div>
+
+            <!-- Search Bar -->
+            <div id="search-container">
+                <input type="text" id="search-bar" placeholder="Search for places">
+            </div>
+
             <div class="map-content">
                 <!-- Map Container -->
                 <div id="map-container">
