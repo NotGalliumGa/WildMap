@@ -1,11 +1,7 @@
 # WildMap
 Map application for HackNH
-
-WE ballin!
-
-freak on it (> w <)
-
-yuh
-
-hehehehahhahahah muhahah ahh ishf osadfoshfoi ahfoihaseoif haweopif haweiopf haweop fhaweupoif hpoawei fhpouia hfpouiads hfiueash opfgseapu
-
+Authors: 
+Galvin Rivera
+Diego Luis Dela Cruz
+Samriddha Adhikari
+Nicolas Siagian
