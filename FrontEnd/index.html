@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
         #map { height: 100%; border-radius: 8px;}
@@ -250,7 +251,7 @@
                 const form = document.getElementById('expandableForm');
                 const addReviewBtn = document.querySelector('.add-review-btn');
                 const addRequestBtn = document.querySelector('.add-request-btn');
-        
+                form.style.display = 'none';
                 function toggleForm() {
                     if (form.style.display === 'none' || form.style.display === '') {
                         form.style.display = 'block';

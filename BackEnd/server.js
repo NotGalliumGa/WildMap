@@ -1,19 +1,18 @@
 const express = require('express');
-nodemailer = require("nodemailer");
-puppet = require('puppeteer');
-
+const nodemailer = require("nodemailer");
+const puppet = require('puppeteer');
+const path = require('path');
 
 const app = express();
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../FrontEnd')));
 
 app.get('/', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../FrontEnd/index.html'));
 });
 
 app.post('/', function(req, res, next){
-  var data=req.body;
-
   const name = req.body.name;
   const location_desc = req.body.location_desc;
   const general_desc = req.body.general_desc;
@@ -96,4 +95,6 @@ scrapeWebsite()
   })
   .catch(error => console.error('Scraping failed:', error));
 
-app.listen(2000);
+app.listen(2000, () => {
+    console.log("http://localhost:2000/")
+})
