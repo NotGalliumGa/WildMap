@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <style>
+        #map {
+            height: 100%;
+            width: 75%; /* Map takes up 75% of the width */
+            float: left;
+        }
+        #info {
+            height: 100%;
+            width: 25%; /* Info sidebar takes up 25% of the width */
+            float: left;
+            background: #f4f4f4;
+            padding: 10px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            right: 0;
+            overflow-y: auto;
+        }
+        #sidebar {
+            padding: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Sidebar and Hamburger Menu -->
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" id="menu-icon">&#9776;</label>
+
+    <div id="sidebar">
+        <a href="index.html">Home</a>
+        <a href="page1.html">Recent Reviews</a>
+        <a href="page2.html">Map</a>
+        <a href="page3.html">Page 3</a>
+    </div>
+
+    <div id="main">
+        <div class="map-content">
+            <h1>Map</h1>
+            <p>Below is the WildMap!</p>
+            <!-- Map Container -->
+            <div id="map-container">
+                <div id="map"></div>
+                <div id="info">
+                    <h3>Location Information</h3>
+                    <p id="location-name">Click on a marker to view information</p>
+                    <p id="location-desc"></p>
+                    <p id="location-link"></p>
+                </div>
+                <script>
+                    // Create the map and set its view to specific coordinates (MUB)
+                    const map = L.map('map').setView([43.13444, -70.93083], 15); // Coordinates of MUB
+
+                    // Add the tile layer (OpenStreetMap tiles)
+                    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        minZoom: 14,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    }).addTo(map);
+
+                    // Marker information
+                    const locations = [
+                        {
+                            name: "Memorial Union Building (MUB)",
+                            latLng: [43.13444, -70.93083],
+                            desc: "Core facilities at UNH including the UNH Bookstore, Campus Services, Games Room, and more.",
+                            link: "https://www.unh.edu/mub/"
+                        },
+                        {
+                            name: "Thompson Hall",
+                            latLng: [43.13601, -70.93238],
+                            desc: "Home to the College of Liberal Arts at UNH.",
+                            link: "https://cola.unh.edu/"
+                        },
+                        {
+                            name: "Dimond Library",
+                            latLng: [43.13544923700985, -70.93326597669162],
+                            desc: "The Diamond Library is the main library on campus and houses collections supporting the humanities, social sciences, business, health sciences, human services, education, and earth sciences. It is also home to the federal and state depository piblication collections, multimedia, Special Collections, University Archives, and the University Museum. Students enjoy using the library's quiet rooms and comfortable seating to study.",
+                            link: "https://library.unh.edu/locations/dimond-library"
+                        },
+                        {
+                            name: "Hamel Recreation Center",
+                            latLng: [43.13877, -70.93335],
+                            desc: "The Hamel Recreation Center is a state-of-the-art fitness and recreation facility at the University of New Hampshire. It offers a wide range of fitness equipment, group exercise classes, indoor courts, and recreational spaces. It is a popular hub for students looking to stay active and engaged with various sports and fitness programs.",
+                            link: "https://campusrec.unh.edu/facilities/hamel-recreation-center"
+                        },
+                        {
+                            name: "Kingsbury Hall",
+                            latLng: [43.13417908742887, -70.93435063027898],
+                            desc: "Kingsbury Hall provides students the environment they need to learn to become the next generation of scientists, engineers, and mathematicians. The laboratories have the appropriate infrascructure, with high-bay areas and heating, air conditioning, and ventalation throughout. All departements in Kingsbury have computer clusters and student project spaces. Students like to grab a coffee and a snack at Albert's and study in the Engineering, Math, and Computer Science Library.",
+                            link: "https://ceps.unh.edu/facility/kingsbury-hall"
+                        },
+                        {
+                            name: "Ecenter",
+                            latLng: [43.13628730878516, -70.92640880283004],
+                            desc: "The Peter T. Paul Entrepreneurship Center delivers a unique, hands-on, experiential programming that inspires, nurtures, and mentors students from any major, at every step in the process, anywhere from idea development to company creation. It operates as a start-up in an academic environment, and most programs are donor funded.Led by a proven serial entrepreneur, the ECenter is rapidly demonstrating significant success throughout the UNH student community.",
+                            link: "https://www.unh.edu/ecenter/"
+                        },
+                        {
+                            name: "University of New Hampshire InterOperability Laboratory",
+                            latLng: [43.136152709507066, -70.92662000573046],
+                            desc: "The UNH InterOperability Laboratory tests networking and data communications products. Since 1988, the laboratory has fostered multi-vendor interoperability while preparing students for careers in the industry. The laboratory has grown steadily into one of the industry's premier independent proving new grounds for new technologies.",
+                            link: "https://innovation.unh.edu/unh-interoperability-lab"
+                        },
+                        {
+                            name: "Whittemore Center Arena",
+                            latLng: [43.139646398728345, -70.9345250208699],
+                            desc: "The Whittemore Center is a multi-purpose arena. It is home to the UNH Wildcats Hockey. Other events that happen in the Whitt include career fairs, open skate, and concerts.",
+                            link: "https://campusrec.unh.edu/facilities/whittemore-center-arena"
+                        },
+                        {
+                            name: "Paul College",
+                            latLng: [43.136656798875336, -70.92926288466798],
+                            desc: "The Peter T. Paul College of Business and Economics provides state-of-the-art facilities, including classrooms, lecture halls, computer labs, and collaboration spaces. It is home to various centers and institutes focused on business innovation, entrepreneurship, and economic research.",
+                            link: "https://paulcollege.unh.edu"
+                        }
+
+                    ];
+
+
+                    // Function to update the sidebar with marker info
+                    function updateInfo(info) {
+                        document.getElementById("location-name").textContent = info.name;
+                        document.getElementById("location-desc").textContent = info.desc;
+                        document.getElementById("location-link").innerHTML = `<a href="${info.link}" target="_blank">Learn more</a>`;
+                    }
+
+                    // Add markers to the map
+                    locations.forEach(location => {
+                        const marker = L.marker(location.latLng).addTo(map);
+                        marker.on('click', function() {
+                            updateInfo(location); // Update the info sidebar when the marker is clicked
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

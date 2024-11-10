@@ -13,9 +13,28 @@
     crossorigin=""></script>
 
     <!--Makes the Map fill the div-->
-    <style> #map { height: 100%; border-radius: 8px;} </style>
+    <style> #map { height: 100%; border-radius: 8px;} 
+
+        #search-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        #search-bar {
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body class="index-page">
+    <div id="search-container">
+        <input type="text" id="search-bar" placeholder="Search for places">
+    </div>
+    
     <!-- Sidebar and Hamburger Menu -->
     <input type="checkbox" id="menu-toggle">
     <label for="menu-toggle" id="menu-icon">&#9776;</label>
@@ -27,7 +46,7 @@
         <a href="page3.html">deez nuts</a>
     </div>
 
-    <div id="main">
+    <div id="main">  
         <div class="home-content">
             <h1 style="color: black;"><b>WildMap</b></h1>
             <p style="color: white;">Your go-to platform for exploring and contributing to the community.</p>
@@ -36,7 +55,7 @@
                 <!-- Map Container -->
                 <div id="map-container">
                     <div id="map"></div>
-                    <Script>
+                    <script>
                         // the map and its tileset
                         const map = L.map('map').setView([43.13444, -70.93083], 15); // coords of MUB
                         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -45,21 +64,114 @@
                         }).addTo(map);
                         
                         //need to add pointers here
-                    </Script>
+                        // Marker information
+                        const locations = [
+                            {
+                                name: "Memorial Union Building (MUB)",
+                                latLng: [43.13444, -70.93083],
+                                desc: "Core facilities at UNH including the UNH Bookstore, Campus Services, Games Room, and more.",
+                                link: "https://www.unh.edu/mub/"
+                            },
+                            {
+                                name: "Thompson Hall",
+                                latLng: [43.13601, -70.93238],
+                                desc: "Thompson Hall, known affectionately as T-Hall, is an icon of the Durham campus. It is recognizable for its clock tower and colonial-style architecture, making it a symbolic and historic landmark. T-Hall is the home of UNH Graduate School",
+                                link: "https://gradschool.unh.edu"
+                            },
+                            {
+                                name: "Dimond Library",
+                                latLng: [43.13544923700985, -70.93326597669162],
+                                desc: "The Diamond Library is the main library on campus and houses collections supporting the humanities, social sciences, business, health sciences, human services, education, and earth sciences. It is also home to the federal and state depository publication collections, multimedia, Special Collections, University Archives, and the University Museum. Students enjoy using the library's quiet rooms and comfortable seating to study. Tags: reading, books, study spot",
+                                link: "https://library.unh.edu/locations/dimond-library"
+                            },
+                            {
+                                name: "Hamel Recreation Center",
+                                latLng: [43.13877, -70.93335],
+                                desc: "The Hamel Recreation Center is a state-of-the-art fitness and recreation facility at the University of New Hampshire. It offers a wide range of fitness equipment, group exercise classes, indoor courts, and recreational spaces. It is a popular hub for students looking to stay active and engaged with various sports and fitness programs. Tags: gym, basketball, volleyball, squash, climbing",
+                                link: "https://campusrec.unh.edu/facilities/hamel-recreation-center"
+                            },
+                            {
+                                name: "Kingsbury Hall",
+                                latLng: [43.13417908742887, -70.93435063027898],
+                                desc: "Kingsbury Hall provides students the environment they need to learn to become the next generation of scientists, engineers, and mathematicians. The laboratories have the appropriate infrastructure, with high-bay areas and heating, air conditioning, and ventilation throughout. All departments in Kingsbury have computer clusters and student project spaces. Tags: CEPS, Computer science, IT",
+                                link: "https://ceps.unh.edu/facility/kingsbury-hall"
+                            },
+                            {
+                                name: "Ecenter",
+                                latLng: [43.13628730878516, -70.92640880283004],
+                                desc: "The Peter T. Paul Entrepreneurship Center delivers a unique, hands-on, experiential programming that inspires, nurtures, and mentors students from any major, at every step in the process, anywhere from idea development to company creation.",
+                                link: "https://www.unh.edu/ecenter/"
+                            },
+                            {
+                                name: "University of New Hampshire InterOperability Laboratory",
+                                latLng: [43.136152709507066, -70.92662000573046],
+                                desc: "The UNH InterOperability Laboratory tests networking and data communications products. Since 1988, the laboratory has fostered multi-vendor interoperability while preparing students for careers in the industry.",
+                                link: "https://innovation.unh.edu/unh-interoperability-lab"
+                            },
+                            {
+                                name: "Whittemore Center Arena",
+                                latLng: [43.139646398728345, -70.9345250208699],
+                                desc: "The Whittemore Center is a multi-purpose arena. It is home to the UNH Wildcats Hockey. Other events that happen in the Whitt include career fairs, open skate, and concerts.",
+                                link: "https://campusrec.unh.edu/facilities/whittemore-center-arena"
+                            },
+                            {
+                                name: "Paul College",
+                                latLng: [43.136656798875336, -70.92926288466798],
+                                desc: "The Peter T. Paul College of Business and Economics provides state-of-the-art facilities, including classrooms, lecture halls, computer labs, and collaboration spaces.",
+                                link: "https://paulcollege.unh.edu"
+                            },
+                            {
+                                name: "Holloway Commons (HoCo)",
+                                latLng: [43.136656798875336, -70.92926288466798],
+                                desc: "The Peter T. Paul College of Business and Economics provides state-of-the-art facilities, including classrooms, lecture halls, computer labs, and collaboration spaces.",
+                                link: "https://paulcollege.unh.edu"
+                            },
+                            
+                        ];
+
+                        const markers = [];
+                        locations.forEach(location => {
+                            const marker = L.marker(location.latLng).addTo(map);
+                            marker.bindPopup(`
+                                <h3>${location.name}</h3>
+                                <p>${location.desc}</p>
+                                <a href="${location.link}" target="_blank">Learn more</a>
+                            `);
+                            markers.push({ marker, location });
+                        });
+
+                        // Function to filter markers based on the search term
+                        function filterMarkers(searchTerm) {
+                            markers.forEach(({ marker, location }) => {
+                                const nameMatches = location.name.toLowerCase().includes(searchTerm.toLowerCase());
+                                const descMatches = location.desc.toLowerCase().includes(searchTerm.toLowerCase());
+                                if (nameMatches || descMatches) {
+                                    marker.addTo(map); // Show the marker
+                                } else {
+                                    map.removeLayer(marker); // Hide the marker
+                                }
+                            });
+                        }
+
+                        // Set up event listener for the search bar
+                        document.getElementById('search-bar').addEventListener('input', (event) => {
+                            const searchTerm = event.target.value;
+                            filterMarkers(searchTerm);
+                        });
+                    </script>
                 </div>
             </div>
     
             <div>
-                <!--This is were mub event fetch is held, this can change depending on how you want it sam-->
-                <script>
+                <!--This is were mub event fetch is held, this can change depending on how you want it sam--->
                     
-                </script>
+                <!-- This is where MUB event fetch can be implemented -->
             </div>
 
             <div class="intro-card">
                 <h2>About Us</h2>
                 <p>
-                    WildMap was created in hopes to help students discover the best places on compus, share their experiences, and connect with others. 
+                    WildMap was created in hopes to help students discover the best places on campus, share their experiences, and connect with others. 
                     Whether you're here to review locations, find new spots, or find an event, we're glad to have you on board!
                 </p>
             </div>
@@ -125,7 +237,7 @@
             </div>
         </div>
 
-        <!--events and info goes here-->
+        <!-- Events and info goes here -->
     </div>
 </body>
 </html>
