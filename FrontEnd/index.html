@@ -71,6 +71,7 @@
             margin-left: 250px;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 
 <body class="index-page">
@@ -85,14 +86,19 @@
     <label for="menu-toggle" id="menu-icon">&#9776;</label>
     <div id="sidebar">
         <a href="index.html" class="menu-item">Map</a>
+        <a href="#about" class="menu-item">About us</a>
         <a href="#reviews" class="menu-item">Request/Review Location</a>
     </div>
 
 
     <div id="main">  
         <div class="home-content">
-            <h1 style="color: black;"><b>WildMap</b></h1>
-            <p style="color: white;">Your go-to platform for exploring and contributing to the community.</p>
+            <h1 style="text-align: center;">
+                <img src="WildMap.png" alt="WildMap Logo" style="width: 300px; height: auto;">
+            </h1>
+            <div class="boxed-text">
+                <p style="color: white;">Your go-to platform for exploring and contributing to the community.</p>
+            </div>
             <div class="map-content">
                 <!-- Map Container -->
                 <div id="map-container">
@@ -207,14 +213,14 @@
                 </div>
             </div>
             
-            <div class="intro-card">
+            <div id="about" class="intro-card">
                 <h2>About Us</h2>
-                <p>WildMap helps students discover and contribute to campus locations.</p>
-                <p>
+                <p>WildMap helps students discover and contribute to campus locations.
                     WildMap was created in hopes to help students discover the best places on campus, share their experiences, and connect with others. 
                     Whether you're here to review locations, find new spots, or find an event, we're glad to have you on board!
                 </p>
             </div>
+            
             <div class="reviews-content" style="margin-top: 10%;">
                 <h1 style="color: black; text-align: center;">Recent Location Reviews</h1>
                 <p style="color: white; text-align: center;">See what other users think about different locations. Filter by star rating to find the best reviews.</p>
