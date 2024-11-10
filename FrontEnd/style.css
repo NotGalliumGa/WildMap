@@ -176,6 +176,8 @@
     margin-right: 10px;
     font-weight: bold;
     color: #333;
+    margin-left: 10%;
+
 }
 
 #star-filter {
@@ -191,6 +193,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-left: 10%;
+
 }
 
 .review-card {
@@ -238,7 +242,7 @@
 
 /* Floating Buttons on Right Side */
 .add-request-btn, .add-review-btn {
-    position: fixed;
+    position: static;
     right: 20px;
     padding: 15px 20px 15px;
     margin-bottom: 20px;
@@ -313,7 +317,7 @@
 }
 
 .boxed-text {
-    background-color: #1a1a1a; /* Dark gray background */
+    background-color: #ffffff; /* Dark gray background */
     color: #fff; /* White text color */
     padding: 10px; /* Padding inside the box */
     border-radius: 12px; /* Rounded corners */
