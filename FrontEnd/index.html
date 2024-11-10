@@ -11,34 +11,79 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!--Makes the Map fill the div-->
-    <style> #map { height: 100%; border-radius: 8px;} 
-
+    <style>
+        #map { height: 100%; border-radius: 8px;}
         #search-container {
             position: absolute;
             top: 10px;
             right: 10px;
             z-index: 1000;
         }
-
         #search-bar {
             padding: 8px;
             width: 200px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        /* Sidebar styles */
+        #menu-toggle {
+            display: none;
+        }
+        #menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 999;
+        }
+        #sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #111;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 15px;
+            text-align: center;
+        }
+        #sidebar a:hover {
+            background-color: #575757;
+        }
+        #menu-toggle:checked + #menu-icon + #sidebar {
+            left: 0;
+        }
+        /* Main content area */
+        #main {
+            transition: margin-left .3s;
+            padding: 20px;
+        }
+        #menu-toggle:checked + #menu-icon + #sidebar + #main {
+            margin-left: 250px;
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
+
 <body class="index-page">
+
+    <!-- Search Bar -->
     <div id="search-container">
         <input type="text" id="search-bar" placeholder="Search for places">
     </div>
-    
+
     <!-- Sidebar and Hamburger Menu -->
     <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" id="menu-icon">&#9776;</label>
-
+    <label for="menu-toggle" id="menu-icon" style="position: fixed;">&#9776;</label>
     <div id="sidebar">
         <a href="#main" class="menu-item">Map</a>
         <a href="#events" class="menu-item">Events</a>
@@ -46,34 +91,42 @@
         <a href="#about" class="menu-item">About us</a>
     </div>
 
+
     <div id="main">  
         <div class="home-content">
-            <h1 style="color: black;"><b>WildMap</b></h1>
-            <p style="color: white;">Your go-to platform for exploring and contributing to the community.</p>
-
+            <h1 style="text-align: center;">
+                <img src="WildMap.png" alt="WildMap Logo" style="width: 300px; height: auto;">
+            </h1>
+            <div class="boxed-text">
+                <p style="color: black;">Your go-to platform for exploring and contributing to the community.</p>
+            </div>
             <div class="map-content">
                 <!-- Map Container -->
                 <div id="map-container">
                     <div id="map"></div>
                     <script>
-                        // the map and its tileset
-                        const map = L.map('map').setView([43.13444, -70.93083], 15); // coords of MUB
+                        const menuItems = document.querySelectorAll('.menu-item');
+                        menuItems.forEach(item => {
+                            item.addEventListener('click', () => {
+                                // Uncheck the checkbox to close the menu
+                                document.getElementById('menu-toggle').checked = false;
+                            });
+                        });
+                        const map = L.map('map').setView([43.13601, -70.93238], 14.5);
                         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             maxZoom: 19,
                             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
                         
-                        //need to add pointers here
-                        // Marker information
                         const locations = [
-                            {
+                        {
                                 name: "Memorial Union Building (MUB)",
                                 latLng: [43.13444, -70.93083],
-                                desc: "Core facilities at UNH including the UNH Bookstore, Campus Services, Games Room, and more.",
+                                desc: "Core facilities at UNH including the UNH Bookstore, Campus Services, Games Room, and more. <br>Tags: Events, Services, Information desk, Granite State Room, Strafford Room",
                                 link: "https://www.unh.edu/mub/"
                             },
                             {
-                                name: "Thompson Hall",
+                                name: "Thompson Hall (T-hall)",
                                 latLng: [43.13601, -70.93238],
                                 desc: "Thompson Hall, known affectionately as T-Hall, is an icon of the Durham campus. It is recognizable for its clock tower and colonial-style architecture, making it a symbolic and historic landmark. T-Hall is the home of UNH Graduate School",
                                 link: "https://gradschool.unh.edu"
@@ -81,37 +134,37 @@
                             {
                                 name: "Dimond Library",
                                 latLng: [43.13544923700985, -70.93326597669162],
-                                desc: "The Dimond Library is the main library on campus and houses collections supporting the humanities, social sciences, business, health sciences, human services, education, and earth sciences. It is also home to the federal and state depository publication collections, multimedia, Special Collections, University Archives, and the University Museum. Students enjoy using the library's quiet rooms and comfortable seating to study. Tags: reading, books, study spot, diamond",
+                                desc: "The Dimond Library is the main library on campus and houses collections supporting the humanities, social sciences, business, health sciences, human services, education, and earth sciences. It is also home to the federal and state depository publication collections, multimedia, Special Collections, University Archives, and the University Museum. Students enjoy using the library's quiet rooms and comfortable seating to study.<br>Tags: reading, books, study spot, diamond",
                                 link: "https://library.unh.edu/locations/dimond-library"
                             },
                             {
-                                name: "Hamel Recreation Center",
+                                name: "Hamel Recreation Center (HRC)",
                                 latLng: [43.13877, -70.93335],
-                                desc: "The Hamel Recreation Center is a state-of-the-art fitness and recreation facility at the University of New Hampshire. It offers a wide range of fitness equipment, group exercise classes, indoor courts, and recreational spaces. It is a popular hub for students looking to stay active and engaged with various sports and fitness programs. Tags: gym, basketball, volleyball, squash, climbing, swimming, pool",
+                                desc: "The Hamel Recreation Center is a state-of-the-art fitness and recreation facility at the University of New Hampshire. It offers a wide range of fitness equipment, group exercise classes, indoor courts, and recreational spaces. It is a popular hub for students looking to stay active and engaged with various sports and fitness programs.<br>Tags: gym, basketball, volleyball, squash, climbing, swimming, pool",
                                 link: "https://campusrec.unh.edu/facilities/hamel-recreation-center"
                             },
                             {
                                 name: "Kingsbury Hall",
                                 latLng: [43.13417908742887, -70.93435063027898],
-                                desc: "Kingsbury Hall provides students the environment they need to learn to become the next generation of scientists, engineers, and mathematicians. The laboratories have the appropriate infrastructure, with high-bay areas and heating, air conditioning, and ventilation throughout. All departments in Kingsbury have computer clusters and student project spaces. Tags: CEPS, Computer science, IT",
+                                desc: "Kingsbury Hall provides students the environment they need to learn to become the next generation of scientists, engineers, and mathematicians. The laboratories have the appropriate infrastructure, with high-bay areas and heating, air conditioning, and ventilation throughout. All departments in Kingsbury have computer clusters and student project spaces.<br>Tags: CEPS, Computer science, IT, engineering",
                                 link: "https://ceps.unh.edu/facility/kingsbury-hall"
                             },
                             {
                                 name: "Ecenter",
                                 latLng: [43.13628730878516, -70.92640880283004],
-                                desc: "The Peter T. Paul Entrepreneurship Center delivers a unique, hands-on, experiential programming that inspires, nurtures, and mentors students from any major, at every step in the process, anywhere from idea development to company creation.",
+                                desc: "The Peter T. Paul Entrepreneurship Center delivers a unique, hands-on, experiential programming that inspires, nurtures, and mentors students from any major, at every step in the process, anywhere from idea development to company creation.<br>Tags: entrepeneurship",
                                 link: "https://www.unh.edu/ecenter/"
                             },
                             {
-                                name: "University of New Hampshire InterOperability Laboratory",
+                                name: "University of New Hampshire InterOperability Laboratory (IOL)",
                                 latLng: [43.136152709507066, -70.92662000573046],
-                                desc: "The UNH InterOperability Laboratory tests networking and data communications products. Since 1988, the laboratory has fostered multi-vendor interoperability while preparing students for careers in the industry.",
+                                desc: "The UNH InterOperability Laboratory tests networking and data communications products. Since 1988, the laboratory has fostered multi-vendor interoperability while preparing students for careers in the industry.<br>Tags: network, testing",
                                 link: "https://innovation.unh.edu/unh-interoperability-lab"
                             },
                             {
                                 name: "Whittemore Center Arena",
                                 latLng: [43.139646398728345, -70.9345250208699],
-                                desc: "The Whittemore Center is a multi-purpose arena. It is home to the UNH Wildcats Hockey. Other events that happen in the Whitt include career fairs, open skate, and concerts.",
+                                desc: "The Whittemore Center is a multi-purpose arena. It is home to the UNH Wildcats Hockey. Other events that happen in the Whitt include career fairs, open skate, and concerts.<br>Tags: skate, hockey, venue, arena",
                                 link: "https://campusrec.unh.edu/facilities/whittemore-center-arena"
                             },
                             {
@@ -123,7 +176,7 @@
                             {
                                 name: "Holloway Commons (HoCo)",
                                 latLng: [43.13521725906018, -70.92950021960765],
-                                desc: "Holloway Commons is centrally located and the largest dining hall on campus. It features many individual food stations where fresh items are prepared right on the spot. Favorites include stir-fry and brick-oven specialties.",
+                                desc: "Holloway Commons is centrally located and the largest dining hall on campus. It features many individual food stations where fresh items are prepared right on the spot. Favorites include stir-fry and brick-oven specialties.<br>Tags: food, breakfast, lunch, dinner, meal",
                                 link: "https://www.unh.edu/dining/facility/holloway-commons-hoco"
                             },
                             
@@ -140,24 +193,23 @@
                             markers.push({ marker, location });
                         });
 
-                        // Function to filter markers based on the search term
                         function filterMarkers(searchTerm) {
                             markers.forEach(({ marker, location }) => {
                                 const nameMatches = location.name.toLowerCase().includes(searchTerm.toLowerCase());
                                 const descMatches = location.desc.toLowerCase().includes(searchTerm.toLowerCase());
                                 if (nameMatches || descMatches) {
-                                    marker.addTo(map); // Show the marker
+                                    marker.addTo(map); 
                                 } else {
-                                    map.removeLayer(marker); // Hide the marker
+                                    map.removeLayer(marker);
                                 }
                             });
                         }
 
-                        // Set up event listener for the search bar
                         document.getElementById('search-bar').addEventListener('input', (event) => {
                             const searchTerm = event.target.value;
                             filterMarkers(searchTerm);
                         });
+                        
                     </script>
                 </div>
 
@@ -223,7 +275,7 @@
                 </script>
 
             </div>
-        
+            
             <div class="reviews-content" style="margin-top: 10%;">
                 <h1 style="color: black; text-align: center;">Recent Location Reviews</h1>
                 <p style="color: white; text-align: center;">See what other users think about different locations. Filter by star rating to find the best reviews.</p>
@@ -275,7 +327,7 @@
             </script>
 
                 <!-- Filter Section -->
-                <div id="filter-container">
+                <div id="filter-container" style="margin-top: 20px; margin-bottom: 20px;">
                     <label for="star-filter">Filter by Stars:</label>
                     <select id="star-filter">
                         <option value="all">All</option>
@@ -291,9 +343,9 @@
                 <div id="reviews">
                     <div class="review-card" data-stars="5">
                         <div class="review-stars">★★★★★</div>
-                        <div class="review-title">Amazing App!</div>
+                        <div class="review-title">Hamel Recreational Center</div>
                         <div class="review-description">
-                            This app has been a game-changer for me. Highly recommend it to everyone!
+                            Amazing facility with everything you want in a gym! 
                         </div>
                         <div class="review-meta">
                             <span>Reviewed by: Alex</span>
@@ -303,9 +355,9 @@
     
                     <div class="review-card" data-stars="4">
                         <div class="review-stars">★★★★☆</div>
-                        <div class="review-title">Great, but needs improvement</div>
+                        <div class="review-title">Holloway Commons</div>
                         <div class="review-description">
-                            I love the features, but there's room for improvement in the navigation.
+                            I love the most of the food but not all of it.
                         </div>
                         <div class="review-meta">
                             <span>Reviewed by: Jamie</span>
@@ -315,9 +367,9 @@
     
                     <div class="review-card" data-stars="3">
                         <div class="review-stars">★★★☆☆</div>
-                        <div class="review-title">Good, but could be better</div>
+                        <div class="review-title">Kingsbury Hall</div>
                         <div class="review-description">
-                            Overall, it's a decent app but lacks some essential features.
+                            The bathrooms need some work. 
                         </div>
                         <div class="review-meta">
                             <span>Reviewed by: Casey</span>
