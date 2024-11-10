@@ -18,7 +18,7 @@
     position: fixed;
     top: 15px;
     left: 15px;
-    color: #ffffff;
+    color: #444;
     z-index: 2;
 }
 
@@ -73,11 +73,11 @@
 }
 
 .reviews-page #main {
-    background-color: #fda1a1; /* Light grey for Reviews Page */
+    background-color: #cf5b5b; /* Light grey for Reviews Page */
 }
 
 .map-page #main {
-    background-color: #42ff58; /* Soft green for Map Page */
+    background-color: #f0f8f1; /* Soft green for Map Page */
 }
 
 /* Home Page Content Styling */
@@ -246,7 +246,7 @@
 
 /* Floating Buttons on Right Side */
 .add-request-btn, .add-review-btn {
-    position: static;
+    position: fixed;
     right: 20px;
     padding: 15px 20px;
     border-radius: 50px;
@@ -254,19 +254,19 @@
     font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, box-shadow 0.3s;
-    z-index: 99;
+    z-index: 3;
     color: #fff;
     border: none;
 }
 
 /* Specific styling for each button */
 .add-request-btn {
-    bottom: 40px;
+    bottom: 100px;
     background-color: #28a745;
 }
 
 .add-review-btn {
-    bottom: 100px;
+    bottom: 40px;
     background-color: #007bff;
 }
 
@@ -279,6 +279,69 @@
     background-color: #0056b3;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+/* About Section */
+#about {
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stacks the items vertically */
+    justify-content: flex-start; /* Aligns items to the top */
+    align-items: center; /* Centers items horizontally */
+    background-color: #f9f9f9; /* Light gray background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow for more emphasis */
+    border-radius: 15px; /* Rounded corners */
+    margin: 50px auto;
+    max-width: 600px; /* Wider box */
+}
+
+.intro-card {
+    width: 100%;
+    max-width: 700px; /* Increased max-width to make the box larger */
+    background-color: white; /* White background for the card */
+    padding: 40px; /* More padding for a spacious look */
+    border-radius: 15px; /* Rounded corners for the card */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Bigger shadow effect */
+    text-align: center; /* Center the text */
+}
+
+.intro-card h2 {
+    font-size: 2em; /* Larger heading */
+    font-weight: bold;
+    color: #333; /* Dark gray text */
+    margin-bottom: 25px; /* Increased margin between heading and text */
+    text-align: center;
+}
+
+.intro-card p {
+    font-size: 1em; /* Larger paragraph text */
+    color: #555; /* Medium gray for readability */
+    line-height: 1.8; /* Increased line spacing for better readability */
+    margin-bottom: 30px; /* More space between paragraphs */
+}
+
+.boxed-text {
+    background-color: #1a1a1a; /* Dark gray background */
+    color: #fff; /* White text color */
+    padding: 10px; /* Padding inside the box */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow around the box */
+    font-size: 1.2em; /* Adjust the font size */
+    max-width: 600px; /* Optional: limit box width */
+    margin: 20px auto; /* Center the box */
+    text-align: center; /* Center align the text */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.boxed-text p {
+    margin: 0; /* Remove default margin from paragraph */
+}
+
+.boxed-text:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+}
+
+
 
 /* Responsive Adjustments */
 @media screen and (max-width: 768px) {
