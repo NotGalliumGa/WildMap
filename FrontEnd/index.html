@@ -173,12 +173,58 @@
                 </p>
             </div>
         
+
+
             <div class="reviews-content" style="margin-top: 10%;">
                 <h1 style="color: black; text-align: center;">Recent Location Reviews</h1>
                 <p style="color: white; text-align: center;">See what other users think about different locations. Filter by star rating to find the best reviews.</p>
                 
-                <button class="add-review-btn">+ Add Location Review</button>
-                <button class="add-request-btn">+ Add New Location Request</button>
+                <button class="add-review-btn" onclick="showForm()">+ Add Location Review</button>
+                <button class="add-request-btn" onclick="showForm()">+ Add New Location Request</button>
+        
+                <!-- Expandable Form Section -->
+                <div id="expandableForm" class="card mt-4">
+                    <div class="card-body">
+                        <form method="POST" action="/">
+                            <div class="form-titles">
+                                <label for="first_name">name</label>
+                                <input type="text" name="name" id="first_name" class="form-control" />
+                            </div>
+                            <div class="form-titles">
+                                <label for="last_name">location description</label>
+                                <input type="text" name="location_desc" id="last_name" class="form-control" />
+                            </div>
+                            <div class="form-titles">
+                                <label for="email_address">general descriptions</label>
+                                <input type="text" name="general_desc" id="email_address" class="form-control" />
+                            </div>
+                            <div class="form-titles">
+                                <input type="submit" class="btn btn-success" value="Submit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                // Function to toggle form visibility on button clicks
+                const form = document.getElementById('expandableForm');
+                const addReviewBtn = document.querySelector('.add-review-btn');
+                const addRequestBtn = document.querySelector('.add-request-btn');
+        
+                function toggleForm() {
+                    if (form.style.display === 'none' || form.style.display === '') {
+                        form.style.display = 'block';
+                    } else {
+                        form.style.display = 'none';
+                    }
+                }
+        
+                // Event listeners for the buttons
+                addReviewBtn.addEventListener('click', toggleForm);
+                addRequestBtn.addEventListener('click', toggleForm);
+            </script>
+
 
                 <!-- Filter Section -->
                 <div id="filter-container">
